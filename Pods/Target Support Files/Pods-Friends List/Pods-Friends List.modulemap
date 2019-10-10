@@ -1,0 +1,6 @@
+framework module Pods_Friends_List {
+  umbrella header "Pods-Friends List-umbrella.h"
+
+  export *
+  module * { export * }
+}

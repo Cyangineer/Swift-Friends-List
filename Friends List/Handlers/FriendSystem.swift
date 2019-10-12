@@ -65,6 +65,8 @@ class FriendSystem {
     
     var friendsList = [UserModel]()
     var didGetFriendData = false
+    var friendAddedIndex = 0
+    var friendRemovedIndex = 0
     
     func getFriends(_ update: @escaping () -> Void){
         currentUserRef.child("friends").queryOrdered(byChild: "username").observeSingleEvent(of: .value) { (snapshot) in
@@ -87,8 +89,6 @@ class FriendSystem {
         }
     }
     
-    var friendAddedIndex = 0
-    
     func friendAdded(_ update: @escaping () -> Void) {
         currentUserRef.child("friends").queryOrdered(byChild: "username").observe(.childAdded) { (snapshot) in
             let uid = snapshot.key
@@ -107,8 +107,6 @@ class FriendSystem {
         }
     }
     
-    var friendRemovedIndex = 0
-    
     func friendRemoved(_ update: @escaping () -> Void) {
         currentUserRef.child("friends").observe(.childRemoved) { (snapshot) in
             let uid = snapshot.key
@@ -123,6 +121,9 @@ class FriendSystem {
     }
     
     var orderedRequestsList = [UserModel]()
+    var didGetRequestData = false
+    var requestAddedIndex = 0
+    var requestRemovedIndex = 0
     
     func getRequests(_ update: @escaping () -> Void){
         currentUserRef.child("requests").queryOrdered(byChild: "timeStamp").observeSingleEvent(of: .value) { (snapshot) in
@@ -134,6 +135,7 @@ class FriendSystem {
                     request.timeStamp = timestamp
                     if let index = self.orderedRequestsList.firstIndex(where: {$0.timeStamp < request.timeStamp}) {
                         self.orderedRequestsList.insert(request, at: index)
+                        self.requestAddedIndex = index
                         self.didGetRequestData = true
                         update()
                     }else{
@@ -145,9 +147,6 @@ class FriendSystem {
             }
         }
     }
-    
-    var requestAddedIndex = 0
-    var didGetRequestData = false
     
     func requestAdded(_ update: @escaping () -> Void) {
         currentUserRef.child("requests").queryOrdered(byChild: "timeStamp").observe(.childAdded) { (snapshot) in
@@ -169,8 +168,6 @@ class FriendSystem {
         }
     }
     
-    var requestRemovedIndex = 0
-    
     func requestRemoved(_ update: @escaping () -> Void) {
         currentUserRef.child("requests").queryOrdered(byChild: "timeStamp").observe(.childRemoved) { (snapshot) in
             let uid = snapshot.key
@@ -185,11 +182,13 @@ class FriendSystem {
     }
     
     var orderedPendingList = [UserModel]()
+    var didGetPendingData = false
+    var pendingAddedIndex = 0
+    var pendingRemovedIndex = 0
     
     func getPending(_ update: @escaping () -> Void){
         currentUserRef.child("pending").queryOrdered(byChild: "timeStamp").observeSingleEvent(of: .value) { (snapshot) in
             self.orderedPendingList.removeAll()
-            
             for child in snapshot.children.allObjects as! [DataSnapshot] {
                 let uid = child.key
                 let timestamp = child.childSnapshot(forPath: "timeStamp").value as! String
@@ -210,9 +209,6 @@ class FriendSystem {
         }
     }
     
-    var pendingAddedIndex = 0
-    var didGetPendingData = false
-    
     func pendingAdded(_ update: @escaping () -> Void) {
         currentUserRef.child("pending").queryOrdered(byChild: "timeStamp").observe(.childAdded) { (snapshot) in
             let uid = snapshot.key
@@ -232,8 +228,6 @@ class FriendSystem {
             })
         }
     }
-    
-    var pendingRemovedIndex = 0
     
     func pendingRemoved(_ update: @escaping () -> Void) {
         currentUserRef.child("pending").queryOrdered(byChild: "timeStamp").observe(.childRemoved) { (snapshot) in

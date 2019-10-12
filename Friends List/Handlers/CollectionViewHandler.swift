@@ -10,9 +10,10 @@ import UIKit
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        FriendSystem.system.currentUserRef.child("new").child("requests").removeValue()
-        FriendSystem.system.currentUserRef.child("new").child("friends").removeValue()
         tabIndexSelected = indexPath.row
+        if indexPath.row == 0 {
+            FriendSystem.system.currentUserRef.child("new").child("requests").removeValue()
+        }
         titleLabel.text = categoryArray[tabIndexSelected].title
         tableView.reloadData()
     }

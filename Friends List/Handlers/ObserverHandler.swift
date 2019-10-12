@@ -90,14 +90,5 @@ extension MainViewController {
             }
             self.collectionView.reloadData()
         }
-        
-        friendSystem.currentUserRef.child("new").child("friends").observe(.value) { (snapshot) in
-            if snapshot.children.allObjects.count != 0 {
-                self.categoryArray[2].indicatorOn = true
-            }else{
-                self.categoryArray[2].indicatorOn = false
-            }
-            self.collectionView.reloadData()
-        }
     }
 }

@@ -259,11 +259,9 @@ class FriendSystem {
             let newFriend = ["username": user.username] as [String : Any]
             self.currentUserRef.child("requests").child(userID).removeValue()
             self.currentUserRef.child("friends").child(userID).updateChildValues(newFriend)
-            self.currentUserRef.child("new").child("friends").child(userID).setValue(true)
             
             self.usersRef.child(userID).child("friends").child(currentUserID).updateChildValues(newFriend)
             self.usersRef.child(userID).child("pending").child(currentUserID).removeValue()
-            self.usersRef.child(userID).child("new").child("friends").child(currentUserID).setValue(true)
         }
     }
     

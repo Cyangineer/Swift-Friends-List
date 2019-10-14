@@ -1,1 +1,4 @@
-/Friends\ List/GoogleService-Info.plist
+GoogleService-Info.plist
+Podfile.lock
+Pods/
+*.xcworkspace/

@@ -286,7 +286,9 @@ class FriendSystem {
         friendsList.removeAll()
         orderedRequestsList.removeAll()
         orderedPendingList.removeAll()
-        currentUserRef.removeAllObservers()
+        currentUserRef.child("friends").removeAllObservers()
+        currentUserRef.child("pending").removeAllObservers()
+        currentUserRef.child("requests").removeAllObservers()
         didGetFriendData = false
         didGetRequestData = false
         didGetPendingData = false

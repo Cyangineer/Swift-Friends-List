@@ -1,5 +1,5 @@
 ## Screenshots
-![](Screenshots/screenshots.png)
+![](Screenshots/pretty-screenshots.png)
 ### Instructions
 In order to test the demo you need to:
 1. Add your generated `GoogleService-Info.plist` file from your firebase console to the project.
